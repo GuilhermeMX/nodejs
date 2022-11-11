@@ -7,11 +7,18 @@ app.use(express.json());
 
 const customers = [];
 
-/** cpf = string
-    name = string
-    id = uuid
-    statement = []
-*/
+//Middlewares
+function verifyIfExistsAccountCPF(request, response, next) {
+  const { cpf } = request.headers;
+
+  const customer = customers.find(customer => customer.cpf === cpf)
+
+  if (!customer) {
+    return response.status(400).json({ error: "Customer not found" });
+  }
+
+  return next();
+}
 
 app.post("/account", (request, response) => {
   const { cpf, name } = request.body;
@@ -35,14 +42,7 @@ app.post("/account", (request, response) => {
 })
 
 // Returning client statement with request.header
-app.get("/statement", (request, response) => {
-  const { cpf } = request.headers;
-
-  const customer = customers.find(customer => customer.cpf === cpf)
-
-  if (!customer) {
-    return response.status(400).json({ error: "Customer not found" });
-  }
+app.get("/statement", verifyIfExistsAccountCPF, (request, response) => {
 
   return response.json(customer.statement)
 })
