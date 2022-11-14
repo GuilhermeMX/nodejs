@@ -53,4 +53,19 @@ app.delete("/courses/:id", (request, response) => {
   ]);
 })
 
-app.listen(3333);
+app.listen(3333); 
+
+//Middlewares
+function verifyIfExistsAccountCPF(request, response, next) {
+  const { cpf } = request.headers;
+
+  const customer = customers.find(customer => customer.cpf === cpf)
+
+  if (!customer) {
+    return response.status(400).json({ error: "Customer not found" });
+  }
+
+  request.customer = customer;
+
+  return next();
+}
