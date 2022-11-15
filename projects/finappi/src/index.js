@@ -50,4 +50,8 @@ app.get("/statement", verifyIfExistsAccountCPF, (request, response) => {
   return response.json(customer.statement)
 })
 
+app.post("deposit", verifyIfExistsAccountCPF, (request, response) => {
+  
+})
+
 app.listen(3333);
