@@ -43,6 +43,8 @@ app.post('/users', (request, response) => {
     deadline: '2021-02-27T00:00:00.000Z', 
     created_at: '2021-02-22T00:00:00.000Z'
   })
+
+  return response.status(201).send();
 });
 
 app.get('/todos', checksExistsUserAccount, (request, response) => {
