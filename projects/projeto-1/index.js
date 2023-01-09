@@ -25,6 +25,13 @@ function checksExistsUserAccount(request, response, next) {
   return next();
 }
 
+{ 
+	id: 'uuid'; // precisa ser um uuid
+	name: 'Danilo Vieira'; 
+	username: 'danilo'; 
+	todos: []
+}
+
 app.post('/users', (request, response) => {
   const { username, name } = request.body;
 
