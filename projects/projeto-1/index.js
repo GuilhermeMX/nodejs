@@ -10,45 +10,16 @@ app.use(express.json());
 
 const users = [];
 
-// middleware:
-function checksExistsUserAccount(request, response, next) {
-  const { username } = request.headers;
-
-  const user = users.find(user => user.username === username)
-
-  if (!user) {
-    return response.status(400).json({ error: "user not found" });
-  }
-
-  request.username = username;
-
-  return next();
-}
-
-{ 
-	id: 'uuid'; // precisa ser um uuid
-	name: 'Danilo Vieira'; 
-	username: 'danilo'; 
-	todos: []
-}
-
 app.post('/users', (request, response) => {
   const { username, name } = request.body;
 
-  const userAlreadyExists = users.some(
-    (user) => user.username === username
-  );
+  const id = uuidv4();
 
-  if (userAlreadyExists) {
-    return response.status(400).json({ error: "user already exists" })
-  };
-
-  userAlreadyExists.push({
-    id: 'uuid',
-    title: 'Nome da tarefa',
-    done: false, 
-    deadline: '2021-02-27T00:00:00.000Z', 
-    created_at: '2021-02-22T00:00:00.000Z'
+  users.push({
+    id: "uuid",
+    name: "Guilherme Xavier",
+    username: "guilhermemx",
+    todos: []
   })
 
   return response.status(201).send();
